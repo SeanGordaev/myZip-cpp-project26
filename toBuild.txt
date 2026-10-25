@@ -1,0 +1,1 @@
+g++ main.cpp includes/myZip.cpp -o .\build\main ; .\build\main
