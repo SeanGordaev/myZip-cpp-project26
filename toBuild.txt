@@ -1,2 +1,2 @@
 ROOT IS myZip:
-    g++ src/main.cpp src/myZip.cpp -I includes -o build\main ; .\build\main
+    g++ src/*.cpp  -I includes -o build\main ; .\build\main
