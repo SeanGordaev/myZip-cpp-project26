@@ -1,6 +1,8 @@
 #include "../includes/myZip.h"
 #include "../includes/struct.h"
 #include <bitset>
+#include <string> 
+#include <map>
 
 using namespace std;
 
@@ -78,6 +80,26 @@ Node* createTree(const vector<pair<vector<bool>, int>>& sortedCounter) {
     return root;
 }
 
+void treeCode(map<vector<bool>, string>& dict, const Node* root,  string code) {
+    string Pcode = code;
+    if (root->weight != -1) {
+        Pcode += to_string(root->weight);
+        dict[root->value] = Pcode;
+
+    }
+
+    if (root->right != nullptr) {
+        treeCode(dict, root->right, Pcode);
+    }
+    if (root->left != nullptr) {
+        treeCode(dict, root->left, Pcode);
+    }
+}
+
+
+void translateBitsWithTree(Node* root, vector<bool> bits) {
+
+}
 
 void myZip(vector<bool> bits) {
 
