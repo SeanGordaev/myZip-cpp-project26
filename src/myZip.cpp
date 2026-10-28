@@ -1,7 +1,9 @@
 #include "../includes/myZip.h"
+#include "../includes/struct.h"
 #include <bitset>
 
 using namespace std;
+
 
 bool equalsBytes(const vector<bool>& Bite1, const vector<bool>& Bite2) {
     for (int i = 0; i < 8; i++) {
@@ -50,15 +52,32 @@ vector<pair<vector<bool>, int>> counterDuplicateBytes(const vector<bool>& bits) 
 
 }
 
-void sortedCounderDuplicateBytes(vector<pair<vector<bool>, int>>& duplicates) {
+void sortedCounterDuplicateBytes(vector<pair<vector<bool>, int>>& duplicates) {
     sort(duplicates.begin(), duplicates.end(), [](const pair<vector<bool>, int>& a, const pair<vector<bool>, int>& b) {
-        return a.second < b.second;
+        return a.second > b.second;
     });
 }
 
-void createTree(const vector<pair<vector<bool>, int>>& duplicates) {
+Node* createTree(const vector<pair<vector<bool>, int>>& sortedCounter) {
+    Node* root = new Node(-1);
+    Node* posRoot = root;
 
+    for (auto P : sortedCounter) {
+        if (posRoot->right == nullptr) {
+            posRoot->right = new Node(0);
+            posRoot->right->value = P.first;
+            continue;
+        }
+        else if (posRoot->left == nullptr) {
+            posRoot->left = new Node(1);
+            posRoot->left->value = P.first;
+            posRoot = posRoot->left;
+        }
+    }
+
+    return root;
 }
+
 
 void myZip(vector<bool> bits) {
 

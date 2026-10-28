@@ -1,32 +1,9 @@
 #include "../includes/myZip.h"
+#include "../includes/struct.h"
 #include <iostream>
 #include <bitset>
 
 using namespace std;
-
-template <typename T>
-struct ZIP
-{
-    vector<bool> zip_data;
-    vector<T> tree;
-};
-
-struct Node {
-    int key;
-    int weight;
-    Node* left;
-    Node* right;
-
-    Node(int k, int w) : key(k), weight(w), left(nullptr), right(nullptr) {}
-};
-
-class WeightedBinaryTree {
-    private:
-    public:
-};
-
-
-
 
 void printBits(vector<bool> bits) {
     for (int i = 0; i < bits.size(); i++) {
@@ -66,26 +43,47 @@ string bitsToText(const vector<bool>& bits) {
     return text;
 }
 
+void printTree(Node* root, int step = 0) {
+    Node* posRoot = root;
+    cout << "step: " << step << " - ";
+    printBits(root->value);
+    cout << " | " << bitsToText(root->value);
+    cout << " - " << root->weight << endl;
+
+    if (posRoot->right != nullptr) {
+        printTree(posRoot->right, step + 2);
+    }
+    if (posRoot->left != nullptr) {
+        printTree(posRoot->left, step + 1);
+    }
+}
+
 
 int main(void) {
 
-    vector<bool> bitText = textToBits("hello");
+    string text = "HHHELOO";
 
-    printBits(bitText);
+    cout << "Value: " << text << endl << endl;
+    
+    vector<bool> bitsOfValue = textToBits(text);
+    cout << "Bits of value: "; printBits(bitsOfValue); cout << endl << endl;
 
-    auto D = counterDuplicateBytes(bitText);
-    sortedCounderDuplicateBytes(D);
+    cout << "translate to text: " << bitsToText(bitsOfValue) << endl << endl;
 
-    string text = bitsToText(bitText);
+    auto duplicateBytes = counterDuplicateBytes(bitsOfValue);
+    sortedCounterDuplicateBytes(duplicateBytes);
 
-    cout << "\n" + text << endl;
-
-    for (auto P : D) {
+    for (auto P : duplicateBytes) {
         string text = bitsToText(P.first);
         cout << text << " - ";
         printBits(P.first);
         std::cout << "[" << P.second << "]" << endl;
     }
+
+    cout << endl;
+
+    Node* root = createTree(duplicateBytes);
+    printTree(root);
 
     return 0;
 }
