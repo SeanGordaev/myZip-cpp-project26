@@ -2,6 +2,7 @@
 #include "../includes/struct.h"
 #include <iostream>
 #include <bitset>
+#include <map>
 
 using namespace std;
 
@@ -84,6 +85,25 @@ int main(void) {
 
     Node* root = createTree(duplicateBytes);
     printTree(root);
+
+    cout << endl;
+
+    map<vector<bool>, string> dict;
+    treeCode(dict, root);
+
+    for (const auto& [bits, str] : dict) {
+        // 1. Печатаем ключ (вектор bool)
+        std::cout << "[";
+        for (bool bit : bits) {
+            std::cout << bit; // выведет 0 или 1
+        }
+        std::cout << "]";
+
+        // 2. Печатаем значение (строку)
+        std::cout << " => " << str << std::endl;
+    }
+
+    
 
     return 0;
 }
